@@ -50,6 +50,10 @@ class TranslateUserService {
     } // getByName
 
     async doesExistById(id) {return await new TranslateUserDBAdapter().getModelById(id)};
+
+    async existsById(id) {return await new TranslateUserDBAdapter().getModelById(id)};
+
+    async existsByName(value) {return await new TranslateUserDBAdapter().getModelByName(value)};    
     
 } // TranslateUserService
 

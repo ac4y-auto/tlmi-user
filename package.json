@@ -1,6 +1,6 @@
 {
   "name": "@tlmi/tlmi-user",
-  "version": "1.20190103.1",
+  "version": "1.20190309.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

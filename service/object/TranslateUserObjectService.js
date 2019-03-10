@@ -15,9 +15,9 @@ class TranslateUserObjectService extends Ac4yObjectService {
     async updateTranslateUser(request) {return await this.getObjectResponse(translateUserService.update(request.params.id, request.body));}
     
     async getAllTranslateUsers(request) {
-        logger.trace("getAllTranslateUsers.request:"+JSON.stringify(request));
+        //logger.trace("getAllTranslateUsers.request:"+JSON.stringify(request));
         var response = await this.getList(await translateUserService.getAll())
-        logger.trace("getAllTranslateUsers.response:"+JSON.stringify(response));
+        //logger.trace("getAllTranslateUsers.response:"+JSON.stringify(response));
         return  response;
     }
 
@@ -25,7 +25,37 @@ class TranslateUserObjectService extends Ac4yObjectService {
     async getTranslateUserByName(request) {return await this.getObjectResponse(translateUserService.getByName(request.value));}
 
     async doesExistTranslateUserById(request) {return await this.doesExistObjectById(translateUserService.doesExistById(request.id));}
-	
+    async existsTranslateUserById(request) {return await this.doesExistObjectById(translateUserService.doesExistById(request.id));}
+
+    async existsTranslateUserByName(request) {
+
+        try {
+
+            var response = new GetObjectResponse();
+
+            var exists = await translateUserService.doesExistByName(request.value).catch( (error) => {throw error});
+
+            if (exists)
+                response.setResult(
+                    new Ac4yProcessResult({
+                        code: 1
+                        ,message: "exist!"
+                    })
+                );
+            else
+                response.setResult(
+                    new Ac4yProcessResult({
+                        code: 0
+                        ,message: "does not exist!"
+                    })
+                );
+
+        } catch (error) {response.setResult(new Ac4yProcessResult().error(error.message || error))};
+
+        return response;
+
+    } // existsTranslateUserByName
+    
 } // TranslateUserObjectService
 
 module.exports=new TranslateUserObjectService()

@@ -9,7 +9,8 @@ class TranslateUserRestService {
         this.service.get('/user/translateuser/:id', this.getTranslateUserById);
         this.service.get('/user/translateuser/byname/:value', this.getTranslateUserByName);
 
-        this.service.get('/user/translateuser/exists/:id', this.doesExistTranslateUserById);
+        this.service.get('/user/translateuser/exists/:id', this.existsTranslateUserById);
+        this.service.get('/user/translateuser/exists/byname/:value', this.existsTranslateUserByName);
 
         this.service.post('/user/translateuser', this.insertTranslateUser);
         this.service.post('/user/translateuser/:id', this.updateTranslateUser);
@@ -26,7 +27,8 @@ class TranslateUserRestService {
     async getTranslateUserById(request, response) {response.send(await translateUserObjectService.getTranslateUserById(request.params));}
     async getTranslateUserByName(request, response) {response.send(await translateUserObjectService.getTranslateUserByName(request.params));}
 
-    async doesExistTranslateUserById(request, response) {response.send(await translateUserObjectService.doesExistTranslateUserById(request.params));}
+    async existsTranslateUserById(request, response) {response.send(await translateUserObjectService.existsTranslateUserById(request.params));}
+    async existsTranslateUserByName(request, response) {response.send(await translateUserObjectService.existsTranslateUserByName(request.params));}
 
 } // TranslateUserRestService
 
