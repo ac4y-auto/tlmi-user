@@ -1,6 +1,5 @@
 var Model=require('./DBConnector.js').Model;
 var Ac4yGUIDHandler = require("@ac4y/ac4y-utility/domain/Ac4yGUIDHandler.js");
-
 var logger = require('../element/Ac4yLogger.js').getLogger('dbadapter');
 
 class TranslateUserModel extends Model {static get tableName() {return 'TranslateUser';}}
@@ -38,7 +37,8 @@ class TranslateUserDBAdapter {
 
     async insert(object){
         if (!object.GUID) object.GUID=new Ac4yGUIDHandler().getGUID();
-        logger.trace("insert - INSERT INTO TranslateUser:" + JSON.stringify(object));
+        delete object.ac4yIdentification;
+        logger.trace("insert - INSERT INTO TranslateUser (after forPersistence):" + JSON.stringify(object));
         var result = await TranslateUserModel.query().insertAndFetch(object);
         logger.trace("insert - inserted id:" + (result ? result.id : 'n/a'));
         return result;
@@ -46,7 +46,8 @@ class TranslateUserDBAdapter {
 
     async update(id, object){
         object.updatedAt = new Date();
-        logger.trace("update - UPDATE TranslateUser SET ... WHERE id=" + id + " data:" + JSON.stringify(object));
+        delete object.ac4yIdentification;
+        logger.trace("update - UPDATE TranslateUser SET ... WHERE id=" + id + " (after forPersistence):" + JSON.stringify(object));
         var result = await TranslateUserModel.query().patchAndFetchById(id, object);
         logger.trace("update - updated id:" + (result ? result.id : 'n/a'));
         return result;

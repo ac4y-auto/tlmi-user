@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model TranslateUser {
+  id        Int      @id @default(autoincrement())
+  GUID      String?  @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
+  humanId   String?  @db.VarChar(255)
+  name      String?  @db.VarChar(255)
+  code      String?  @db.VarChar(255)
+  email     String?  @db.VarChar(255)
+  token     String?  @db.VarChar(255)
+  avatar    String?  @db.LongText
+  password  String?  @db.VarChar(255)
+  humanName String?  @db.VarChar(255)
+  language  String?  @db.VarChar(255)
+}
