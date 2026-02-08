@@ -1,10 +1,6 @@
 var Ac4yObjectService = require("@ac4y/ac4y-service/domain/Ac4yObjectService.js");
-/*var Ac4yServiceResponse=require("@ac4y/ac4y-common/service/Ac4yServiceResponse.js");
-var Ac4yProcessResult=require("@ac4y/ac4y-common/service/Ac4yProcessResult.js"); 
-
-var GetObjectResponse = require("@ac4y/ac4y-common/service/document/GetObjectResponse.js");
-var GetListResponse = require("@ac4y/ac4y-common/service/document/GetListResponse.js");
-*/
+var Ac4yProcessResult = require("@ac4y/ac4y-service/domain/Ac4yProcessResult.js");
+var GetObjectResponse = require("@ac4y/ac4y-service/document/GetObjectResponse.js");
 var translateUserService = require("../base/TranslateUserService.js");
 
 var logger=require('../../element/Ac4yLogger.js');
@@ -29,11 +25,11 @@ class TranslateUserObjectService extends Ac4yObjectService {
 
     async existsTranslateUserByName(request) {
 
+        var response = new GetObjectResponse();
+
         try {
 
-            var response = new GetObjectResponse();
-
-            var exists = await translateUserService.doesExistByName(request.value).catch( (error) => {throw error});
+            var exists = await translateUserService.existsByName(request.value).catch( (error) => {throw error});
 
             if (exists)
                 response.setResult(
