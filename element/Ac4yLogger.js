@@ -1,30 +1,22 @@
 const log4js = require('log4js');
 
-class Ac4yLogger {
+log4js.configure({
+    appenders: {
+        console: { type: 'console' },
+        file: { type: 'file', filename: 'gate.log', maxLogSize: 10485760, backups: 3 }
+    },
+    categories: {
+        default:    { appenders: ['console', 'file'], level: 'trace' },
+        rest:       { appenders: ['console', 'file'], level: 'trace' },
+        object:     { appenders: ['console', 'file'], level: 'trace' },
+        service:    { appenders: ['console', 'file'], level: 'trace' },
+        dbadapter:  { appenders: ['console', 'file'], level: 'trace' },
+        startup:    { appenders: ['console', 'file'], level: 'trace' }
+    }
+});
 
-    constructor(){
+function getLogger(category) {
+    return log4js.getLogger(category || 'default');
+}
 
-        log4js.configure({
-            appenders: { gate: { type: 'file', filename: 'gate.log' } },
-            categories: { default: { appenders: ['gate'], level: 'error' } }
-          });
-
-        this.logger = log4js.getLogger('gate');
-
-        this.logger.level = 'trace';
-
-    } // constructor
-
-    getLogger(){return this.logger}
-
-    setLevel(level){this.getLogger().level=level}
-
-    trace(record){this.getLogger().trace(record);}
-    debug(record){this.getLogger().debug(record);}
-    info(record){this.getLogger().info(record);}
-    warn(record){this.getLogger().warn(record);}
-    error(record){this.getLogger().error(record);}
-
-} // Ac4yLogger
-
-module.exports=new Ac4yLogger()
+module.exports = { getLogger: getLogger };
